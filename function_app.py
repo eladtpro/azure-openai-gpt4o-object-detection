@@ -27,41 +27,17 @@ def test_function(req: func.HttpRequest) -> func.HttpResponse:
     )
 
 
-# @app.function_name(name="myfunc")
-# @app.service_bus_queue_trigger(
-#     arg_name="msg",
-#     queue_name="input",
-#     connection="ServiceBusConnection__fullyQualifiedNamespace",
-# )
-# def test_function(msg: func.ServiceBusMessage):
-#     # whatever, just logging to see if it gets invoked
-#     pass
-
-# @app.function_name(name="myfunc2")
-# @app.service_bus_queue_trigger(
-#     arg_name="msg",
-#     queue_name="input",
-#     connection="ServiceBusConnection__fullyQualifiedNamespace",
-# )
-# def test_function2(msg: func.ServiceBusMessage):
-#     # whatever, just logging to see if it gets invoked
-#     pass
-
-
 @app.function_name(name="detect_objects")
 @app.service_bus_queue_trigger(
     arg_name="input_msg",
     queue_name="input",
-    connection="ServiceBusConnection__fullyQualifiedNamespace",
-)
+    connection="ServiceBusConnection__fullyQualifiedNamespace")
 @app.service_bus_topic_output(
     arg_name="output_msg",
     queue_name="output",
-    connection="ServiceBusConnection__fullyQualifiedNamespace",
-)
+    connection="ServiceBusConnection__fullyQualifiedNamespace")
 def detect_objects(input_msg: func.ServiceBusMessage, output_msg: func.Out[str]):
     event_string = input_msg.get_body().decode('utf-8')
-    # event = {"topic":"/subscriptions/977171a9-6bfd-49c4-a496-018d3312466e/resourceGroups/azure-openai/providers/Microsoft.Storage/storageAccounts/stfunctionsopenai","subject":"/blobServices/default/containers/sources/blobs/_636d5f92-d15d-4d13-905e-fd17b09aacc5.jpeg","eventType":"Microsoft.Storage.BlobCreated","id":"695addc9-401e-00db-75bb-e174ef061cf8","data":{"api":"PutBlob","clientRequestId":"87083d28-f4a8-482b-ae17-e41aae222009","requestId":"695addc9-401e-00db-75bb-e174ef000000","eTag":"0x8DCAFD2E44A1357","contentType":"image/jpeg","contentLength":256569,"blobType":"BlockBlob","url":"https://stfunctionsopenai.blob.core.windows.net/sources/_636d5f92-d15d-4d13-905e-fd17b09aacc5.jpeg","sequencer":"00000000000000000000000000009D950000000000501908","storageDiagnostics":{"batchId":"8acc52d3-6006-0075-00bb-e1d9fe000000"}},"dataVersion":"","metadataVersion":"1","eventTime":"2024-07-29T13:32:28.7820631Z"}
     logging.info('Python ServiceBus Queue trigger processed a message: %s', event_string)
     event = json.loads(event_string)
     image_url = event['data']['url']
