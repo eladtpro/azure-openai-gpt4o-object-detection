@@ -26,15 +26,15 @@ def test_function(req: func.HttpRequest) -> func.HttpResponse:
         status_code=200
         )
 
-@app.function_name(name="myfunc")
-@app.service_bus_queue_trigger(
-    arg_name="msg",
-    queue_name="input",
-    connection="ServiceBusConnection__fullyQualifiedNamespace",
-)
-def test_function(msg: func.ServiceBusMessage):
-    # whatever, just logging to see if it gets invoked
-    pass
+# @app.function_name(name="myfunc")
+# @app.service_bus_queue_trigger(
+#     arg_name="msg",
+#     queue_name="input",
+#     connection="ServiceBusConnection__fullyQualifiedNamespace",
+# )
+# def test_function(msg: func.ServiceBusMessage):
+#     # whatever, just logging to see if it gets invoked
+#     pass
 
 @app.function_name(name="myfunc2")
 @app.service_bus_queue_trigger(
