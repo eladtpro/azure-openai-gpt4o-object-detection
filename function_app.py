@@ -27,7 +27,7 @@ def test_function(req: func.HttpRequest) -> func.HttpResponse:
         )
 
 
-@app.function_name(name="detect_objects")
+@app.function_name(name="DetectObjects")
 @app.service_bus_queue_trigger(arg_name="input", queue_name="input", connection="ServiceBusConnection")
 @app.service_bus_topic_output(arg_name="output", queue_name="output", connection="ServiceBusConnection")
 def detect_objects(input: func.ServiceBusMessage, output: func.Out[str]):
