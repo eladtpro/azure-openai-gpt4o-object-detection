@@ -29,7 +29,7 @@ def test_function(req: func.HttpRequest) -> func.HttpResponse:
 @app.function_name(name="myfunc")
 @app.service_bus_queue_trigger(
     arg_name="msg",
-    queue_name="myqueue",
+    queue_name="input",
     connection="ServiceBusConnection__fullyQualifiedNamespace",
 )
 def test_function(msg: func.ServiceBusMessage):
