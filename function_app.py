@@ -6,16 +6,16 @@ from openai import AzureOpenAI
 
 app = func.FunctionApp()
 
-# AZURE_OPENAI_KEY = os.getenv("AZURE_OPENAI_KEY")
-# AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
-# AZURE_OPENAI_DEPLOYMENT = os.getenv("AZURE_OPENAI_DEPLOYMENT")
-# AZURE_OPENAI_VERSION = os.getenv("AZURE_OPENAI_VERSION")
+AZURE_OPENAI_KEY = os.getenv("AZURE_OPENAI_KEY")
+AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
+AZURE_OPENAI_DEPLOYMENT = os.getenv("AZURE_OPENAI_DEPLOYMENT")
+AZURE_OPENAI_VERSION = os.getenv("AZURE_OPENAI_VERSION")
 
-# client = AzureOpenAI(
-#     api_key=AZURE_OPENAI_KEY,
-#     api_version=AZURE_OPENAI_VERSION,
-#     azure_endpoint = AZURE_OPENAI_ENDPOINT
-# )
+client = AzureOpenAI(
+    api_key=AZURE_OPENAI_KEY,
+    api_version=AZURE_OPENAI_VERSION,
+    azure_endpoint = AZURE_OPENAI_ENDPOINT
+)
 
 @app.function_name(name="HttpTrigger1")
 @app.route(route="hello", auth_level=func.AuthLevel.ANONYMOUS)
@@ -50,31 +50,31 @@ def test_function(req: func.HttpRequest) -> func.HttpResponse:
 #     print(json_string)
 #     output.set(json_string)
 
-# def process_image(image_url):
-#     response = client.chat.completions.create(
-#         model=AZURE_OPENAI_DEPLOYMENT,
-#         response_format = {"type": "json_object"},
-#         messages=[
-#             { "role": "system", "content": "You are an assistant that detects objects in a list of images and returns the results in JSON Array format."
-#                                            "For example: {\"tags\": [{\"label\": \"Cars\", \"score\": \"0.9\"}]}" },
-#             { "role": "user", "content": [
-#                 {
-#                     "type": "text",
-#                     "text": "Try to detect the following objects in the list of frames from a video: car, person. Only include the objects that are detected with a certainty above 0.9."
-#                 },
-#                 {
-#                     "type": "image_url",
-#                     "image_url": {
-#                         "url": f"{image_url}"
-#                     }
-#                 }
-#             ] }
-#         ],
-#         max_tokens=2000
-#     )
+def process_image(image_url):
+    response = client.chat.completions.create(
+        model=AZURE_OPENAI_DEPLOYMENT,
+        response_format = {"type": "json_object"},
+        messages=[
+            { "role": "system", "content": "You are an assistant that detects objects in a list of images and returns the results in JSON Array format."
+                                           "For example: {\"tags\": [{\"label\": \"Cars\", \"score\": \"0.9\"}]}" },
+            { "role": "user", "content": [
+                {
+                    "type": "text",
+                    "text": "Try to detect the following objects in the list of frames from a video: car, person. Only include the objects that are detected with a certainty above 0.9."
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"{image_url}"
+                    }
+                }
+            ] }
+        ],
+        max_tokens=2000
+    )
 
-#     print(response)
-#     return response
+    print(response)
+    return response
 
 
 # if __name__ == "__main__":
