@@ -5,6 +5,20 @@ Use Azure OpenAI GPT 4o object detection
 
 
 
+## Deployment
+
+#### Create App Registration
+```bash
+az ad sp create-for-rbac -n func-openai-object-detection-github --role Contributor --scopes /subscriptions/SUBSCRIPTION/resourceGroups/RESOURCE-GROUP --sdk-auth
+```
+#### Set System Assigned Identity
+
+Set the function app's system-assigned identity to the App Registration created above.
+![Set System Assigned Identity](./readme/system-identity.png)
+
+#### Add role assignment
+Set the function app's system-assigned identity to the Service Bus Data Owner role on the Service Bus namespace.
+![Add role assignment](./readme/role-assignment.png)
 
 
 ## Reference
