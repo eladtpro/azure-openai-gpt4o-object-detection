@@ -26,22 +26,21 @@ def test_function(req: func.HttpRequest) -> func.HttpResponse:
         "This HTTP triggered function executed successfully.", status_code=200
     )
 
+# @app.service_bus_topic_output(
+#     arg_name="output_msg",
+#     queue_name="output",
+#     connection="ServiceBusConnection__fullyQualifiedNamespace")
 
 @app.function_name(name="detect_objects")
 @app.service_bus_queue_trigger(
     arg_name="input_msg",
     queue_name="input",
     connection="ServiceBusConnection__fullyQualifiedNamespace")
-# @app.service_bus_topic_output(
-#     arg_name="output_msg",
-#     queue_name="output",
-#     connection="ServiceBusConnection__fullyQualifiedNamespace")
 def detect_objects(input_msg: func.ServiceBusMessage): #, output_msg: func.Out[str]):
     event_string = input_msg.get_body().decode('utf-8')
     logging.info('Python ServiceBus Queue trigger processed a message: %s', event_string)
     event = json.loads(event_string)
     image_url = event['data']['url']
-    # Process the image_url as needed
     response = process_image(image_url)
 
     if hasattr(response, 'choices'):
