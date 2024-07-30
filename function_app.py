@@ -67,5 +67,5 @@ def process_image(image_url):
     return response
 
 
-if __name__ == "__main__":
-    detect_objects()
+# if __name__ == "__main__":
+#     detect_objects()
