@@ -32,11 +32,11 @@ def test_function(req: func.HttpRequest) -> func.HttpResponse:
     arg_name="input_msg",
     queue_name="input",
     connection="ServiceBusConnection__fullyQualifiedNamespace")
-@app.service_bus_topic_output(
-    arg_name="output_msg",
-    queue_name="output",
-    connection="ServiceBusConnection__fullyQualifiedNamespace")
-def detect_objects(input_msg: func.ServiceBusMessage, output_msg: func.Out[str]):
+# @app.service_bus_topic_output(
+#     arg_name="output_msg",
+#     queue_name="output",
+#     connection="ServiceBusConnection__fullyQualifiedNamespace")
+def detect_objects(input_msg: func.ServiceBusMessage): #, output_msg: func.Out[str]):
     event_string = input_msg.get_body().decode('utf-8')
     logging.info('Python ServiceBus Queue trigger processed a message: %s', event_string)
     event = json.loads(event_string)
@@ -46,10 +46,10 @@ def detect_objects(input_msg: func.ServiceBusMessage, output_msg: func.Out[str])
 
     if hasattr(response, 'choices'):
         print("response.choices is an array with one item or more")
-        output_msg.set(str(response.choices[0]))
+        # output_msg.set(str(response.choices[0]))
     else:
         print("response.choices is not an array with one item or more")
-        output_msg.set("response.choices is not an array with one item or more")
+        # output_msg.set("response.choices is not an array with one item or more")
 
     json_string = str(response.choices[0])
     print(json_string)
