@@ -40,7 +40,7 @@ def test_function(msg: func.ServiceBusMessage):
 @app.service_bus_queue_trigger(
     arg_name="msg",
     queue_name="input",
-    connection="ServiceBusConnection",
+    connection="ServiceBusConnection__fullyQualifiedNamespace",
 )
 def test_function2(msg: func.ServiceBusMessage):
     # whatever, just logging to see if it gets invoked
