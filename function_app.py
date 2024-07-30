@@ -37,22 +37,23 @@ def test_function(req: func.HttpRequest) -> func.HttpResponse:
     queue_name="input",
     connection="ServiceBusConnection__fullyQualifiedNamespace")
 def detect_objects(input_msg: func.ServiceBusMessage): #, output_msg: func.Out[str]):
-    event_string = input_msg.get_body().decode('utf-8')
-    logging.info('Python ServiceBus Queue trigger processed a message: %s', event_string)
-    event = json.loads(event_string)
-    image_url = event['data']['url']
-    response = process_image(image_url)
-
-    if hasattr(response, 'choices'):
-        print("response.choices is an array with one item or more")
-        # output_msg.set(str(response.choices[0]))
-    else:
-        print("response.choices is not an array with one item or more")
-        # output_msg.set("response.choices is not an array with one item or more")
-
-    json_string = str(response.choices[0])
-    print(json_string)
-    # output.set(json_string)
+    pass
+    # event_string = input_msg.get_body().decode('utf-8')
+    # logging.info('Python ServiceBus Queue trigger processed a message: %s', event_string)
+    # event = json.loads(event_string)
+    # image_url = event['data']['url']
+    # response = process_image(image_url)
+    #
+    # if hasattr(response, 'choices'):
+    #     print("response.choices is an array with one item or more")
+    #     # output_msg.set(str(response.choices[0]))
+    # else:
+    #     print("response.choices is not an array with one item or more")
+    #     # output_msg.set("response.choices is not an array with one item or more")
+    #
+    # json_string = str(response.choices[0])
+    # print(json_string)
+    # # output.set(json_string)
 
 
 def process_image(image_url):
